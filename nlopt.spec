@@ -4,7 +4,7 @@
 #
 Name     : nlopt
 Version  : 2.4.2
-Release  : 9
+Release  : 10
 URL      : http://ab-initio.mit.edu/nlopt/nlopt-2.4.2.tar.gz
 Source0  : http://ab-initio.mit.edu/nlopt/nlopt-2.4.2.tar.gz
 Summary  : nonlinear optimization libary
