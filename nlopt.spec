@@ -13,7 +13,7 @@ License  : MIT LGPL-2.1
 Requires: nlopt-lib
 Requires: nlopt-doc
 BuildRequires : python
-BuildRequires : python-dev
+
 
 %description
 NLopt is a library for nonlinear local and global optimization, for
