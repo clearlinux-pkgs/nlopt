@@ -1,4 +1,5 @@
 PKG_NAME := nlopt
-URL := http://ab-initio.mit.edu/nlopt/nlopt-2.4.2.tar.gz
+URL = https://github.com/stevengj/nlopt/archive/v2.6.0/nlopt-2.6.0.tar.gz
+ARCHIVES = 
 
 include ../common/Makefile.common
