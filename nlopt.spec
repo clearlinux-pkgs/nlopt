@@ -4,15 +4,18 @@
 #
 Name     : nlopt
 Version  : 2.6.0
-Release  : 15
+Release  : 16
 URL      : https://github.com/stevengj/nlopt/archive/v2.6.0/nlopt-2.6.0.tar.gz
 Source0  : https://github.com/stevengj/nlopt/archive/v2.6.0/nlopt-2.6.0.tar.gz
 Summary  : nonlinear optimization library
 Group    : Development/Tools
 License  : LGPL-2.1 MIT zlib-acknowledgement
+Requires: nlopt-data = %{version}-%{release}
 Requires: nlopt-lib = %{version}-%{release}
 Requires: nlopt-license = %{version}-%{release}
 BuildRequires : buildreq-cmake
+BuildRequires : guile-dev
+BuildRequires : octave-dev
 BuildRequires : python3
 BuildRequires : python3-dev
 
@@ -26,10 +29,19 @@ Bureau. New York, 1986.). The method exploits Peano-type curve to
 reduce dimension of the source bounded multidimensional constrained
 NLP problem and then solves a univariate one.
 
+%package data
+Summary: data components for the nlopt package.
+Group: Data
+
+%description data
+data components for the nlopt package.
+
+
 %package dev
 Summary: dev components for the nlopt package.
 Group: Development
 Requires: nlopt-lib = %{version}-%{release}
+Requires: nlopt-data = %{version}-%{release}
 Provides: nlopt-devel = %{version}-%{release}
 Requires: nlopt = %{version}-%{release}
 
@@ -40,6 +52,7 @@ dev components for the nlopt package.
 %package lib
 Summary: lib components for the nlopt package.
 Group: Libraries
+Requires: nlopt-data = %{version}-%{release}
 Requires: nlopt-license = %{version}-%{release}
 
 %description lib
@@ -56,15 +69,33 @@ license components for the nlopt package.
 
 %prep
 %setup -q -n nlopt-2.6.0
+pushd ..
+cp -a nlopt-2.6.0 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1555122557
+export SOURCE_DATE_EPOCH=1555122826
 mkdir -p clr-build
 pushd clr-build
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math "
+%cmake ..
+make  %{?_smp_mflags}
+popd
+mkdir -p clr-build-avx2
+pushd clr-build-avx2
+export CFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -march=haswell "
+export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -march=haswell "
+export FFLAGS="$CFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -march=haswell "
+export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -march=haswell "
+export CFLAGS="$CFLAGS -march=haswell -m64"
+export CXXFLAGS="$CXXFLAGS -march=haswell -m64"
 %cmake ..
 make  %{?_smp_mflags}
 popd
@@ -75,9 +106,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 cd clr-build; make test
+cd ../clr-build-avx2;
+make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1555122557
+export SOURCE_DATE_EPOCH=1555122826
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nlopt
 cp COPYING %{buildroot}/usr/share/package-licenses/nlopt/COPYING
@@ -91,12 +124,64 @@ cp src/algs/luksan/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/src_a
 cp src/algs/newuoa/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/src_algs_newuoa_COPYRIGHT
 cp src/algs/slsqp/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/src_algs_slsqp_COPYRIGHT
 cp src/algs/stogo/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/src_algs_stogo_COPYRIGHT
+pushd clr-build-avx2
+%make_install_avx2  || :
+popd
 pushd clr-build
 %make_install
 popd
 
 %files
 %defattr(-,root,root,-)
+/usr/lib64/octave/5.1.0/site/oct/x86_64-generic-linux-gnu/nlopt_optimize.oct
+
+%files data
+%defattr(-,root,root,-)
+/usr/share/octave/5.1.0/site/m/NLOPT_AUGLAG.m
+/usr/share/octave/5.1.0/site/m/NLOPT_AUGLAG_EQ.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GD_MLSL.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GD_MLSL_LDS.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GD_STOGO.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GD_STOGO_RAND.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GN_CRS2_LM.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GN_DIRECT.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GN_DIRECT_L.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GN_DIRECT_L_NOSCAL.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GN_DIRECT_L_RAND.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GN_DIRECT_L_RAND_NOSCAL.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GN_DIRECT_NOSCAL.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GN_ESCH.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GN_ISRES.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GN_MLSL.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GN_MLSL_LDS.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GN_ORIG_DIRECT.m
+/usr/share/octave/5.1.0/site/m/NLOPT_GN_ORIG_DIRECT_L.m
+/usr/share/octave/5.1.0/site/m/NLOPT_G_MLSL.m
+/usr/share/octave/5.1.0/site/m/NLOPT_G_MLSL_LDS.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LD_AUGLAG.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LD_AUGLAG_EQ.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LD_CCSAQ.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LD_LBFGS.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LD_LBFGS_NOCEDAL.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LD_MMA.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LD_SLSQP.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LD_TNEWTON.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LD_TNEWTON_PRECOND.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LD_TNEWTON_PRECOND_RESTART.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LD_TNEWTON_RESTART.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LD_VAR1.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LD_VAR2.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LN_AUGLAG.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LN_AUGLAG_EQ.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LN_BOBYQA.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LN_COBYLA.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LN_NELDERMEAD.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LN_NEWUOA.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LN_NEWUOA_BOUND.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LN_PRAXIS.m
+/usr/share/octave/5.1.0/site/m/NLOPT_LN_SBPLX.m
+/usr/share/octave/5.1.0/site/m/nlopt_minimize.m
+/usr/share/octave/5.1.0/site/m/nlopt_minimize_constrained.m
 
 %files dev
 %defattr(-,root,root,-)
@@ -107,6 +192,7 @@ popd
 /usr/lib64/cmake/nlopt/NLoptConfigVersion.cmake
 /usr/lib64/cmake/nlopt/NLoptLibraryDepends-relwithdebinfo.cmake
 /usr/lib64/cmake/nlopt/NLoptLibraryDepends.cmake
+/usr/lib64/haswell/libnlopt.so
 /usr/lib64/libnlopt.so
 /usr/lib64/pkgconfig/nlopt.pc
 /usr/share/man/man3/nlopt.3
@@ -115,6 +201,8 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/haswell/libnlopt.so.0
+/usr/lib64/haswell/libnlopt.so.0.9.0
 /usr/lib64/libnlopt.so.0
 /usr/lib64/libnlopt.so.0.9.0
 
