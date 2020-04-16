@@ -30,6 +30,7 @@ libnlopt.so.0:NLO_GET_STOPVAL
 libnlopt.so.0:NLO_GET_UPPER_BOUNDS
 libnlopt.so.0:NLO_GET_XTOL_ABS
 libnlopt.so.0:NLO_GET_XTOL_REL
+libnlopt.so.0:NLO_GET_X_WEIGHTS
 libnlopt.so.0:NLO_GET_vector_storage
 libnlopt.so.0:NLO_OPTIMIZE
 libnlopt.so.0:NLO_REMOVE_EQUALITY_CONSTRAINTS
@@ -54,6 +55,8 @@ libnlopt.so.0:NLO_SET_UPPER_BOUNDS1
 libnlopt.so.0:NLO_SET_XTOL_ABS
 libnlopt.so.0:NLO_SET_XTOL_ABS1
 libnlopt.so.0:NLO_SET_XTOL_REL
+libnlopt.so.0:NLO_SET_X_WEIGHTS
+libnlopt.so.0:NLO_SET_X_WEIGHTS1
 libnlopt.so.0:NLO_SET_vector_storage
 libnlopt.so.0:_Z3dotRK7RVectorS1_
 libnlopt.so.0:_Z3epsv
@@ -331,6 +334,9 @@ libnlopt.so.0:nlo_get_upper_bounds__
 libnlopt.so.0:nlo_get_vector_storage
 libnlopt.so.0:nlo_get_vector_storage_
 libnlopt.so.0:nlo_get_vector_storage__
+libnlopt.so.0:nlo_get_x_weights
+libnlopt.so.0:nlo_get_x_weights_
+libnlopt.so.0:nlo_get_x_weights__
 libnlopt.so.0:nlo_get_xtol_abs
 libnlopt.so.0:nlo_get_xtol_abs_
 libnlopt.so.0:nlo_get_xtol_abs__
@@ -400,6 +406,12 @@ libnlopt.so.0:nlo_set_upper_bounds__
 libnlopt.so.0:nlo_set_vector_storage
 libnlopt.so.0:nlo_set_vector_storage_
 libnlopt.so.0:nlo_set_vector_storage__
+libnlopt.so.0:nlo_set_x_weights
+libnlopt.so.0:nlo_set_x_weights1
+libnlopt.so.0:nlo_set_x_weights1_
+libnlopt.so.0:nlo_set_x_weights1__
+libnlopt.so.0:nlo_set_x_weights_
+libnlopt.so.0:nlo_set_x_weights__
 libnlopt.so.0:nlo_set_xtol_abs
 libnlopt.so.0:nlo_set_xtol_abs1
 libnlopt.so.0:nlo_set_xtol_abs1_
@@ -419,7 +431,9 @@ libnlopt.so.0:nlopt_add_inequality_constraint
 libnlopt.so.0:nlopt_add_inequality_mconstraint
 libnlopt.so.0:nlopt_add_precond_equality_constraint
 libnlopt.so.0:nlopt_add_precond_inequality_constraint
+libnlopt.so.0:nlopt_algorithm_from_string
 libnlopt.so.0:nlopt_algorithm_name
+libnlopt.so.0:nlopt_algorithm_to_string
 libnlopt.so.0:nlopt_compute_rescaling
 libnlopt.so.0:nlopt_copy
 libnlopt.so.0:nlopt_count_constraints
@@ -444,6 +458,7 @@ libnlopt.so.0:nlopt_get_stochastic_population
 libnlopt.so.0:nlopt_get_stopval
 libnlopt.so.0:nlopt_get_upper_bounds
 libnlopt.so.0:nlopt_get_vector_storage
+libnlopt.so.0:nlopt_get_x_weights
 libnlopt.so.0:nlopt_get_xtol_abs
 libnlopt.so.0:nlopt_get_xtol_rel
 libnlopt.so.0:nlopt_init_genrand
@@ -466,6 +481,8 @@ libnlopt.so.0:nlopt_remove_equality_constraints
 libnlopt.so.0:nlopt_remove_inequality_constraints
 libnlopt.so.0:nlopt_reorder_bounds
 libnlopt.so.0:nlopt_rescale
+libnlopt.so.0:nlopt_result_from_string
+libnlopt.so.0:nlopt_result_to_string
 libnlopt.so.0:nlopt_seconds
 libnlopt.so.0:nlopt_set_default_initial_step
 libnlopt.so.0:nlopt_set_errmsg
@@ -493,6 +510,8 @@ libnlopt.so.0:nlopt_set_upper_bound
 libnlopt.so.0:nlopt_set_upper_bounds
 libnlopt.so.0:nlopt_set_upper_bounds1
 libnlopt.so.0:nlopt_set_vector_storage
+libnlopt.so.0:nlopt_set_x_weights
+libnlopt.so.0:nlopt_set_x_weights1
 libnlopt.so.0:nlopt_set_xtol_abs
 libnlopt.so.0:nlopt_set_xtol_abs1
 libnlopt.so.0:nlopt_set_xtol_rel
