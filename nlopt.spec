@@ -4,13 +4,14 @@
 #
 Name     : nlopt
 Version  : 2.7.0
-Release  : 27
+Release  : 28
 URL      : https://github.com/stevengj/nlopt/archive/v2.7.0/nlopt-2.7.0.tar.gz
 Source0  : https://github.com/stevengj/nlopt/archive/v2.7.0/nlopt-2.7.0.tar.gz
 Summary  : nonlinear optimization libary
 Group    : Development/Tools
 License  : LGPL-2.1 MIT zlib-acknowledgement
 Requires: nlopt-data = %{version}-%{release}
+Requires: nlopt-filemap = %{version}-%{release}
 Requires: nlopt-lib = %{version}-%{release}
 Requires: nlopt-license = %{version}-%{release}
 BuildRequires : buildreq-cmake
@@ -44,11 +45,20 @@ Requires: nlopt = %{version}-%{release}
 dev components for the nlopt package.
 
 
+%package filemap
+Summary: filemap components for the nlopt package.
+Group: Default
+
+%description filemap
+filemap components for the nlopt package.
+
+
 %package lib
 Summary: lib components for the nlopt package.
 Group: Libraries
 Requires: nlopt-data = %{version}-%{release}
 Requires: nlopt-license = %{version}-%{release}
+Requires: nlopt-filemap = %{version}-%{release}
 
 %description lib
 lib components for the nlopt package.
@@ -71,17 +81,17 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1626121715
+export SOURCE_DATE_EPOCH=1633805180
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -mprefer-vector-width=256 "
-export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -mprefer-vector-width=256 "
-export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -mprefer-vector-width=256 "
-export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -mprefer-vector-width=256 "
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -mno-vzeroupper -mprefer-vector-width=256 "
 %cmake ..
 make  %{?_smp_mflags}
 popd
@@ -91,14 +101,14 @@ export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -march=haswell -mprefer-vector-width=256 "
-export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -march=haswell -mprefer-vector-width=256 "
-export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -march=haswell -mprefer-vector-width=256 "
-export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=4 -fno-semantic-interposition -march=haswell -mprefer-vector-width=256 "
-export CFLAGS="$CFLAGS -march=haswell -m64"
-export CXXFLAGS="$CXXFLAGS -march=haswell -m64"
-export FFLAGS="$FFLAGS -march=haswell -m64"
-export FCFLAGS="$FCFLAGS -march=haswell -m64"
+export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -march=x86-64-v3 -mno-vzeroupper -mprefer-vector-width=256 -mtune=skylake "
+export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -march=x86-64-v3 -mno-vzeroupper -mprefer-vector-width=256 -mtune=skylake "
+export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -march=x86-64-v3 -mno-vzeroupper -mprefer-vector-width=256 -mtune=skylake "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -march=x86-64-v3 -mno-vzeroupper -mprefer-vector-width=256 -mtune=skylake "
+export CFLAGS="$CFLAGS -march=x86-64-v3 -m64"
+export CXXFLAGS="$CXXFLAGS -march=x86-64-v3 -m64"
+export FFLAGS="$FFLAGS -march=x86-64-v3 -m64"
+export FCFLAGS="$FCFLAGS -march=x86-64-v3 -m64"
 %cmake ..
 make  %{?_smp_mflags}
 popd
@@ -113,7 +123,7 @@ cd ../clr-build-avx2;
 make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1626121715
+export SOURCE_DATE_EPOCH=1633805180
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nlopt
 cp %{_builddir}/nlopt-2.7.0/COPYING %{buildroot}/usr/share/package-licenses/nlopt/6bde78f7f5f4dc57b34bdcfab2484a5aff2da46e
@@ -128,7 +138,8 @@ cp %{_builddir}/nlopt-2.7.0/src/algs/newuoa/COPYRIGHT %{buildroot}/usr/share/pac
 cp %{_builddir}/nlopt-2.7.0/src/algs/slsqp/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/2dacd8b2f1e11bcd431639c4b40256c9e18d2c82
 cp %{_builddir}/nlopt-2.7.0/src/algs/stogo/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/077253c67533010dac1211c9a46589df20d874cb
 pushd clr-build-avx2
-%make_install_avx2  || :
+%make_install_v3  || :
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 popd
 pushd clr-build
 %make_install
@@ -195,19 +206,21 @@ popd
 /usr/lib64/cmake/nlopt/NLoptConfigVersion.cmake
 /usr/lib64/cmake/nlopt/NLoptLibraryDepends-relwithdebinfo.cmake
 /usr/lib64/cmake/nlopt/NLoptLibraryDepends.cmake
-/usr/lib64/haswell/libnlopt.so
 /usr/lib64/libnlopt.so
 /usr/lib64/pkgconfig/nlopt.pc
 /usr/share/man/man3/nlopt.3
 /usr/share/man/man3/nlopt_minimize.3
 /usr/share/man/man3/nlopt_minimize_constrained.3
 
+%files filemap
+%defattr(-,root,root,-)
+/usr/share/clear/filemap/filemap-nlopt
+
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/haswell/libnlopt.so.0
-/usr/lib64/haswell/libnlopt.so.0.11.0
 /usr/lib64/libnlopt.so.0
 /usr/lib64/libnlopt.so.0.11.0
+/usr/share/clear/optimized-elf/lib*
 
 %files license
 %defattr(0644,root,root,0755)
