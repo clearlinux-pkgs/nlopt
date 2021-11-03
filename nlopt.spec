@@ -4,7 +4,7 @@
 #
 Name     : nlopt
 Version  : 2.7.0
-Release  : 30
+Release  : 31
 URL      : https://github.com/stevengj/nlopt/archive/v2.7.0/nlopt-2.7.0.tar.gz
 Source0  : https://github.com/stevengj/nlopt/archive/v2.7.0/nlopt-2.7.0.tar.gz
 Summary  : nonlinear optimization libary
@@ -81,7 +81,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1633819863
+export SOURCE_DATE_EPOCH=1635949512
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -101,14 +101,14 @@ export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -march=x86-64-v3 -mno-vzeroupper -mprefer-vector-width=256 -mtune=skylake "
-export FCFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -march=x86-64-v3 -mno-vzeroupper -mprefer-vector-width=256 -mtune=skylake "
-export FFLAGS="$FFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -march=x86-64-v3 -mno-vzeroupper -mprefer-vector-width=256 -mtune=skylake "
-export CXXFLAGS="$CXXFLAGS -O3 -Ofast -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -march=x86-64-v3 -mno-vzeroupper -mprefer-vector-width=256 -mtune=skylake "
-export CFLAGS="$CFLAGS -march=x86-64-v3 -m64"
-export CXXFLAGS="$CXXFLAGS -march=x86-64-v3 -m64"
-export FFLAGS="$FFLAGS -march=x86-64-v3 -m64"
-export FCFLAGS="$FCFLAGS -march=x86-64-v3 -m64"
+export CFLAGS="$CFLAGS -O3 -Ofast -Wl,-z,x86-64-v3 -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -march=x86-64-v3 -mno-vzeroupper -mprefer-vector-width=256 -mtune=skylake "
+export FCFLAGS="$FFLAGS -O3 -Ofast -Wl,-z,x86-64-v3 -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -march=x86-64-v3 -mno-vzeroupper -mprefer-vector-width=256 -mtune=skylake "
+export FFLAGS="$FFLAGS -O3 -Ofast -Wl,-z,x86-64-v3 -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -march=x86-64-v3 -mno-vzeroupper -mprefer-vector-width=256 -mtune=skylake "
+export CXXFLAGS="$CXXFLAGS -O3 -Ofast -Wl,-z,x86-64-v3 -falign-functions=32 -ffat-lto-objects -flto=auto -fno-semantic-interposition -march=x86-64-v3 -mno-vzeroupper -mprefer-vector-width=256 -mtune=skylake "
+export CFLAGS="$CFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export FFLAGS="$FFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
+export FCFLAGS="$FCFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
 %cmake ..
 make  %{?_smp_mflags}
 popd
@@ -123,7 +123,7 @@ cd ../clr-build-avx2;
 make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1633819863
+export SOURCE_DATE_EPOCH=1635949512
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nlopt
 cp %{_builddir}/nlopt-2.7.0/COPYING %{buildroot}/usr/share/package-licenses/nlopt/6bde78f7f5f4dc57b34bdcfab2484a5aff2da46e
@@ -139,63 +139,63 @@ cp %{_builddir}/nlopt-2.7.0/src/algs/slsqp/COPYRIGHT %{buildroot}/usr/share/pack
 cp %{_builddir}/nlopt-2.7.0/src/algs/stogo/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/077253c67533010dac1211c9a46589df20d874cb
 pushd clr-build-avx2
 %make_install_v3  || :
-/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 popd
 pushd clr-build
 %make_install
 popd
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
-/usr/lib64/octave/6.3.0/site/oct/x86_64-generic-linux-gnu/nlopt_optimize.oct
+/usr/lib64/octave/6.4.0/site/oct/x86_64-generic-linux-gnu/nlopt_optimize.oct
 
 %files data
 %defattr(-,root,root,-)
-/usr/share/octave/6.3.0/site/m/NLOPT_AUGLAG.m
-/usr/share/octave/6.3.0/site/m/NLOPT_AUGLAG_EQ.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GD_MLSL.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GD_MLSL_LDS.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GD_STOGO.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GD_STOGO_RAND.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GN_CRS2_LM.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GN_DIRECT.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GN_DIRECT_L.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GN_DIRECT_L_NOSCAL.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GN_DIRECT_L_RAND.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GN_DIRECT_L_RAND_NOSCAL.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GN_DIRECT_NOSCAL.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GN_ESCH.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GN_ISRES.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GN_MLSL.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GN_MLSL_LDS.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GN_ORIG_DIRECT.m
-/usr/share/octave/6.3.0/site/m/NLOPT_GN_ORIG_DIRECT_L.m
-/usr/share/octave/6.3.0/site/m/NLOPT_G_MLSL.m
-/usr/share/octave/6.3.0/site/m/NLOPT_G_MLSL_LDS.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LD_AUGLAG.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LD_AUGLAG_EQ.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LD_CCSAQ.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LD_LBFGS.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LD_LBFGS_NOCEDAL.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LD_MMA.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LD_SLSQP.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LD_TNEWTON.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LD_TNEWTON_PRECOND.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LD_TNEWTON_PRECOND_RESTART.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LD_TNEWTON_RESTART.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LD_VAR1.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LD_VAR2.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LN_AUGLAG.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LN_AUGLAG_EQ.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LN_BOBYQA.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LN_COBYLA.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LN_NELDERMEAD.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LN_NEWUOA.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LN_NEWUOA_BOUND.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LN_PRAXIS.m
-/usr/share/octave/6.3.0/site/m/NLOPT_LN_SBPLX.m
-/usr/share/octave/6.3.0/site/m/nlopt_minimize.m
-/usr/share/octave/6.3.0/site/m/nlopt_minimize_constrained.m
+/usr/share/octave/6.4.0/site/m/NLOPT_AUGLAG.m
+/usr/share/octave/6.4.0/site/m/NLOPT_AUGLAG_EQ.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GD_MLSL.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GD_MLSL_LDS.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GD_STOGO.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GD_STOGO_RAND.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GN_CRS2_LM.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GN_DIRECT.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GN_DIRECT_L.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GN_DIRECT_L_NOSCAL.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GN_DIRECT_L_RAND.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GN_DIRECT_L_RAND_NOSCAL.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GN_DIRECT_NOSCAL.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GN_ESCH.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GN_ISRES.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GN_MLSL.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GN_MLSL_LDS.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GN_ORIG_DIRECT.m
+/usr/share/octave/6.4.0/site/m/NLOPT_GN_ORIG_DIRECT_L.m
+/usr/share/octave/6.4.0/site/m/NLOPT_G_MLSL.m
+/usr/share/octave/6.4.0/site/m/NLOPT_G_MLSL_LDS.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LD_AUGLAG.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LD_AUGLAG_EQ.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LD_CCSAQ.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LD_LBFGS.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LD_LBFGS_NOCEDAL.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LD_MMA.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LD_SLSQP.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LD_TNEWTON.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LD_TNEWTON_PRECOND.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LD_TNEWTON_PRECOND_RESTART.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LD_TNEWTON_RESTART.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LD_VAR1.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LD_VAR2.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LN_AUGLAG.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LN_AUGLAG_EQ.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LN_BOBYQA.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LN_COBYLA.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LN_NELDERMEAD.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LN_NEWUOA.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LN_NEWUOA_BOUND.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LN_PRAXIS.m
+/usr/share/octave/6.4.0/site/m/NLOPT_LN_SBPLX.m
+/usr/share/octave/6.4.0/site/m/nlopt_minimize.m
+/usr/share/octave/6.4.0/site/m/nlopt_minimize_constrained.m
 
 %files dev
 %defattr(-,root,root,-)
