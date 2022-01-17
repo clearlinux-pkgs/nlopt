@@ -4,7 +4,7 @@
 #
 Name     : nlopt
 Version  : 2.7.1
-Release  : 32
+Release  : 33
 URL      : https://github.com/stevengj/nlopt/archive/v2.7.1/nlopt-2.7.1.tar.gz
 Source0  : https://github.com/stevengj/nlopt/archive/v2.7.1/nlopt-2.7.1.tar.gz
 Summary  : nonlinear optimization libary
@@ -16,8 +16,8 @@ Requires: nlopt-lib = %{version}-%{release}
 Requires: nlopt-license = %{version}-%{release}
 BuildRequires : buildreq-cmake
 BuildRequires : guile-dev
-BuildRequires : numpy
 BuildRequires : octave-dev
+BuildRequires : pypi(numpy)
 BuildRequires : python3
 BuildRequires : python3-dev
 
@@ -81,7 +81,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1638607164
+export SOURCE_DATE_EPOCH=1642451885
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -123,7 +123,7 @@ cd ../clr-build-avx2;
 make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1638607164
+export SOURCE_DATE_EPOCH=1642451885
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nlopt
 cp %{_builddir}/nlopt-2.7.1/COPYING %{buildroot}/usr/share/package-licenses/nlopt/6bde78f7f5f4dc57b34bdcfab2484a5aff2da46e
