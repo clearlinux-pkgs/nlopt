@@ -4,13 +4,14 @@
 #
 Name     : nlopt
 Version  : 2.7.1
-Release  : 40
+Release  : 41
 URL      : https://github.com/stevengj/nlopt/archive/v2.7.1/nlopt-2.7.1.tar.gz
 Source0  : https://github.com/stevengj/nlopt/archive/v2.7.1/nlopt-2.7.1.tar.gz
 Summary  : nonlinear optimization libary
 Group    : Development/Tools
 License  : LGPL-2.1 MIT zlib-acknowledgement
 Requires: nlopt-data = %{version}-%{release}
+Requires: nlopt-filemap = %{version}-%{release}
 Requires: nlopt-lib = %{version}-%{release}
 Requires: nlopt-license = %{version}-%{release}
 BuildRequires : buildreq-cmake
@@ -44,11 +45,20 @@ Requires: nlopt = %{version}-%{release}
 dev components for the nlopt package.
 
 
+%package filemap
+Summary: filemap components for the nlopt package.
+Group: Default
+
+%description filemap
+filemap components for the nlopt package.
+
+
 %package lib
 Summary: lib components for the nlopt package.
 Group: Libraries
 Requires: nlopt-data = %{version}-%{release}
 Requires: nlopt-license = %{version}-%{release}
+Requires: nlopt-filemap = %{version}-%{release}
 
 %description lib
 lib components for the nlopt package.
@@ -71,7 +81,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1656396009
+export SOURCE_DATE_EPOCH=1661264626
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -113,20 +123,20 @@ cd ../clr-build-avx2;
 make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1656396009
+export SOURCE_DATE_EPOCH=1661264626
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nlopt
-cp %{_builddir}/nlopt-2.7.1/COPYING %{buildroot}/usr/share/package-licenses/nlopt/6bde78f7f5f4dc57b34bdcfab2484a5aff2da46e
-cp %{_builddir}/nlopt-2.7.1/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/cd23454a0abd93b92c357ee22524f583364fbc78
-cp %{_builddir}/nlopt-2.7.1/src/algs/ags/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/4d078684fdcb8fdac6f1b1aef151e542e4a483d1
-cp %{_builddir}/nlopt-2.7.1/src/algs/bobyqa/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/d0a422e23498cf10eba733d4b7882a3484ee510a
-cp %{_builddir}/nlopt-2.7.1/src/algs/cobyla/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/9990b0b02ee9570457a9d860b6e37ae06a1f9dc7
-cp %{_builddir}/nlopt-2.7.1/src/algs/direct/COPYING %{buildroot}/usr/share/package-licenses/nlopt/0c65a98a772b9aa5d3b6bf331102ab6ad8d0f698
-cp %{_builddir}/nlopt-2.7.1/src/algs/esch/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/1be95ecfc4cd8e5f28390a8566884eb61b22001a
-cp %{_builddir}/nlopt-2.7.1/src/algs/luksan/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/6907a52aa4c1680fd7bd7a3cf1da49002abc9c74
-cp %{_builddir}/nlopt-2.7.1/src/algs/newuoa/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/8e9752a28519de55490b55e7fd282c5ee91be74f
-cp %{_builddir}/nlopt-2.7.1/src/algs/slsqp/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/2dacd8b2f1e11bcd431639c4b40256c9e18d2c82
-cp %{_builddir}/nlopt-2.7.1/src/algs/stogo/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/077253c67533010dac1211c9a46589df20d874cb
+cp %{_builddir}/nlopt-%{version}/COPYING %{buildroot}/usr/share/package-licenses/nlopt/6bde78f7f5f4dc57b34bdcfab2484a5aff2da46e
+cp %{_builddir}/nlopt-%{version}/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/cd23454a0abd93b92c357ee22524f583364fbc78
+cp %{_builddir}/nlopt-%{version}/src/algs/ags/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/4d078684fdcb8fdac6f1b1aef151e542e4a483d1
+cp %{_builddir}/nlopt-%{version}/src/algs/bobyqa/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/d0a422e23498cf10eba733d4b7882a3484ee510a
+cp %{_builddir}/nlopt-%{version}/src/algs/cobyla/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/9990b0b02ee9570457a9d860b6e37ae06a1f9dc7
+cp %{_builddir}/nlopt-%{version}/src/algs/direct/COPYING %{buildroot}/usr/share/package-licenses/nlopt/0c65a98a772b9aa5d3b6bf331102ab6ad8d0f698
+cp %{_builddir}/nlopt-%{version}/src/algs/esch/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/1be95ecfc4cd8e5f28390a8566884eb61b22001a
+cp %{_builddir}/nlopt-%{version}/src/algs/luksan/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/6907a52aa4c1680fd7bd7a3cf1da49002abc9c74
+cp %{_builddir}/nlopt-%{version}/src/algs/newuoa/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/8e9752a28519de55490b55e7fd282c5ee91be74f
+cp %{_builddir}/nlopt-%{version}/src/algs/slsqp/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/2dacd8b2f1e11bcd431639c4b40256c9e18d2c82
+cp %{_builddir}/nlopt-%{version}/src/algs/stogo/COPYRIGHT %{buildroot}/usr/share/package-licenses/nlopt/077253c67533010dac1211c9a46589df20d874cb
 pushd clr-build-avx2
 %make_install_v3  || :
 popd
@@ -203,12 +213,17 @@ popd
 /usr/share/man/man3/nlopt_minimize.3
 /usr/share/man/man3/nlopt_minimize_constrained.3
 
+%files filemap
+%defattr(-,root,root,-)
+/usr/share/clear/filemap/filemap-nlopt
+
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/glibc-hwcaps/x86-64-v3/libnlopt.so.0
 /usr/lib64/glibc-hwcaps/x86-64-v3/libnlopt.so.0.11.1
 /usr/lib64/libnlopt.so.0
 /usr/lib64/libnlopt.so.0.11.1
+/usr/share/clear/optimized-elf/other*
 
 %files license
 %defattr(0644,root,root,0755)
