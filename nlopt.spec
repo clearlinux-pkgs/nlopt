@@ -5,7 +5,7 @@
 #
 Name     : nlopt
 Version  : 2.7.1
-Release  : 48
+Release  : 49
 URL      : https://github.com/stevengj/nlopt/archive/v2.7.1/nlopt-2.7.1.tar.gz
 Source0  : https://github.com/stevengj/nlopt/archive/v2.7.1/nlopt-2.7.1.tar.gz
 Summary  : nonlinear optimization libary
@@ -75,7 +75,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1683062143
+export SOURCE_DATE_EPOCH=1685589953
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -117,7 +117,7 @@ cd ../clr-build-avx2;
 make test || :
 
 %install
-export SOURCE_DATE_EPOCH=1683062143
+export SOURCE_DATE_EPOCH=1685589953
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/nlopt
 cp %{_builddir}/nlopt-%{version}/COPYING %{buildroot}/usr/share/package-licenses/nlopt/6bde78f7f5f4dc57b34bdcfab2484a5aff2da46e || :
@@ -194,7 +194,6 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-/V3/usr/lib64/libnlopt.so
 /usr/include/nlopt.f
 /usr/include/nlopt.h
 /usr/include/nlopt.hpp
@@ -210,7 +209,6 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libnlopt.so.0
 /V3/usr/lib64/libnlopt.so.0.11.1
 /usr/lib64/libnlopt.so.0
 /usr/lib64/libnlopt.so.0.11.1
