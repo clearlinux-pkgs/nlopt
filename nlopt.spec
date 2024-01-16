@@ -7,7 +7,7 @@
 #
 Name     : nlopt
 Version  : 2.7.1
-Release  : 54
+Release  : 55
 URL      : https://github.com/stevengj/nlopt/archive/v2.7.1/nlopt-2.7.1.tar.gz
 Source0  : https://github.com/stevengj/nlopt/archive/v2.7.1/nlopt-2.7.1.tar.gz
 Summary  : nonlinear optimization libary
