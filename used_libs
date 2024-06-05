@@ -2,6 +2,6 @@ ld-linux-x86-64.so.2
 libc.so.6
 libgcc_s.so.1
 libm.so.6
-liboctave.so.10
-liboctinterp.so.11
+liboctave.so.11
+liboctinterp.so.12
 libstdc++.so.6
